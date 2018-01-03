@@ -204,6 +204,19 @@ var colt = {
 
 colt.sayHi(); // "Hi Colt" (1000 milliseconds later)
 
+/* 4. The "new" keyword */
+
+function Person(firstNmae, lastName){
+    this.firstNmae = firstNmae;
+    this.lastName = lastName;
+}
+
+var elie = new Person("Elie", "Lee");
+
+elie.firstName // "Elie"
+elie.lastName  // "Lee"
+elie // {firstNmae: "Elie", lastName: "Lee"}
+
 
 
 
