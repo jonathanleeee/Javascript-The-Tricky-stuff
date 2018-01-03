@@ -181,6 +181,30 @@ var elieCalc2 = colt.addNumber.bind(elie,1,2);
 elieCalc(); // "Elie  just calculated 10"
 elieCalc2(3,4) // "Elie just calculated 10" // this is called partial application
 
+/* lose the context of "this" in function we do not want to execute right away */
+var colt = {
+    firstName: "Colt",
+    sayHi: function(){
+        setTimeout(function(){
+            console.log("Hi " + this.firstName)
+        },1000)
+    }
+}    
+
+colt.sayHi(); // "Hi undefined" (1000 milliseconds later) "this" become global
+
+var colt = {
+    firstName: "Colt",
+    sayHi: function(){
+        setTimeout(function(){
+            console.log("Hi " + this.firstName)
+        }.bind(this),1000)
+    }
+} 
+
+colt.sayHi(); // "Hi Colt" (1000 milliseconds later)
+
+
 
 
 
