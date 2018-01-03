@@ -48,3 +48,47 @@ var rusty = new Dog("Rusty", 2);
 var kiki = new Dog("Kiki", 1);
 rusty.bark(); //Rusty just barked!
 kiki.bark();	//Kiki just barked!
+
+
+// OOP 3 multiple constructors
+
+// example 1 failed example
+function Car(make, model, year){
+    this.make = make;
+    this.model = model;
+    this.year = year;
+    this.numWheels = 4;
+}
+
+function Motorcycle(make, model, year){
+    Car(make, model, year);
+    this.numWheels = 2;
+}
+
+var firstMotorCycle = new Motorcycle("fuck", "best", 2002);
+
+firstMotorCycle.make //undefined
+firstMotorCycle.model //undefined
+firstMotorCycle.year //undefined
+firstMotorCycle.numWheels // 2
+// The problem with example 1 is that the keyword this inside the car function is not 
+// the keyword this we want to use
+
+// Solutions for this problem is to use call/apply
+
+function Motorcycle(make, model, year){
+    Car.call(this,make, model, year);
+    this.numWheels = 2;
+}
+
+function Motorcycle(make, model, year){
+    Car.apply(this, [make, model, year]);
+    this.numWheels = 2;
+}
+
+function Motorcycle(make, model, year){
+    Car.apply(this, arguments);
+    this.numWheels = 2;
+}
+
+// ********* end of solutions ***********
