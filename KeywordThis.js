@@ -179,7 +179,7 @@ colt.addNumber.apply(elie,[1,2,3,4]) // "Elie just calculated 10"
 var elieCalc = colt.addNumber.bind(elie,1,2,3,4);
 var elieCalc2 = colt.addNumber.bind(elie,1,2);
 elieCalc(); // "Elie  just calculated 10"
-elieCalc(3,4) // "Elie just calculated 10" // this is called partial application
+elieCalc2(3,4) // "Elie just calculated 10" // this is called partial application
 
 
 
