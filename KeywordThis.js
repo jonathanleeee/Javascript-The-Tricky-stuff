@@ -88,3 +88,101 @@ person.determineContext() // true
 
 person.dog.sayHello() // "Hello undefined"
 person.dog.determineContext() // false
+
+/* 3. Explicit Binding
+   choosing what we want the contect of "this" to be using call, apply, bind
+
+   Name of Method|Parameters         |Invoke Immediatey
+   -------------------------------------------------
+   Call          |thisArg,a,b,c,d... |Yes
+   -------------------------------------------------
+   Apply         |thisArg,[a,b,c,d]  |Yes
+   -------------------------------------------------
+   Bind          |thisArg,a,b,c,d... |No
+ */
+
+
+// ********************* Call ***********************
+
+// A. example
+
+var person = {
+	firstName: "Colt",
+	sayHi: function(){
+		return "Hi " + this.firstName;
+	},
+	determineContext: function(){
+		return this === person;
+	},
+	dog: {
+		sayHello: function(){
+			return "Hello " + this.firstName;
+		},
+		determineContext: function(){
+			return this === person;
+		}
+	}
+}
+
+person.sayHi() // "Hi Colt"
+person.determineContext() // true
+
+person.dog.sayHello.call(person) // "Hello Colt"
+person.dog.determineContext.call(person) // true
+
+
+// B. example
+
+var colt = {
+    firstName: "Colt",
+    sayHi: function(){
+        return "Hi " + this.firstName
+    }    
+}    
+
+var elie = {
+    firstName: "Elie",
+    // sayHi: function(){
+    //     return "Hi " + this.firstName
+    // }    
+} 
+
+colt.sayHi(); //  "Hi Colt"
+elie.sayHi(); //  "Hi Elie"
+colt.sayHi.call(elie); //  "Hi Elie"
+
+// ******************** Apply ********************************
+
+var colt = {
+    firstName: "Colt",
+    sayHi: function(){
+        return "Hi " + this.firstName
+    },        
+    addNumber: function(a,b,c,d){
+        return this.firstName + " just calculated " + (a+b+c+d);
+    }
+}    
+
+var elie = {
+    firstName: "Elie"
+}
+
+colt.sayHi.apply(elie) // "Hi Elie"
+colt.addNumber(1,2,3,4) // "Colt just calculated 10"
+colt.addNumber.call(elie,1,2,3,4) // "Elie just calculated 10"
+colt.addNumber.apply(elie,[1,2,3,4]) // "Elie just calculated 10"
+
+// ******************* Bind *****************************
+
+/* The parameter work like call, but bind returns a function definition with the context of "this" bound already */
+
+var elieCalc = colt.addNumber.bind(elie,1,2,3,4);
+var elieCalc2 = colt.addNumber.bind(elie,1,2);
+elieCalc(); // "Elie  just calculated 10"
+elieCalc(3,4) // "Elie just calculated 10" // this is called partial application
+
+
+
+
+
+
