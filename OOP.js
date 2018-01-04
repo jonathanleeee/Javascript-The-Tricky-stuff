@@ -92,3 +92,142 @@ function Motorcycle(make, model, year){
 }
 
 // ********* end of solutions ***********
+
+
+// OOP 5 Prototype
+
+function Person(name){
+    this.name = name
+}
+
+var elie = new Person("Elie")
+elie.__proto__ === Person.prototype // true
+elie.__proto__.constructor === Person // true
+
+// OOP 6 Prototype Chain
+
+// this is a constructor function
+function Person(name){
+    this.name = name
+}
+
+// this is an object created from the Person constructor
+var elie = new Person("Elie")
+
+Person.prototype.isInstructor = true;
+
+elie.isInstructor // true
+
+// OOP 7
+
+function Person(name){
+	this.name = name;
+	this.sayHi = function(){
+		return "Hi " + this.name;
+	}
+}
+
+elie = new Person("Elie");
+elie.sayHi();  // Hi Elie
+elie // {name: "Elie", sayHi: ƒ}
+// now this code works, but it is inefficient
+// every time we make an object using the new keyword we ahve to redefine this funciton
+// but its the same for everyone! Let's put it on the prototype instead!
+function Person(name){
+	this.name = name;
+}
+
+Person.prototype.sayHi = function(){
+	return "Hi " + this.name;
+}
+
+elie = new Person("Elie");
+elie.sayHi(); // Hi Ellie
+
+// OOP 7 challenge 
+/* 
+
+create a constructor function for a Vehicle: every object created from this constructor 
+should have a make, model, and year property. Each object should also have a property called isRunning
+, which should be set to false
+
+Every object created from the Vehicle constructor should have a function called turnOn, which changes 
+the isRunning property to true
+
+Every object created from the Vehicle constructor should have a function called turnOff, which changes 
+the isRunning property to false
+
+Every object created from the Vehicle constructor should have a method called honk, which returns the 
+string "beep" ONLY if the isRunning property is true
+
+*/
+
+// my solution: inefficient of the turnOn and turnOff function
+
+function Vechicle(make, model, year){
+    this.make = make;
+    this.model = model;
+    this.year = year;
+    this.isRunning = false;
+    this.turnOn = function(){
+        return this.isRunning = true;
+    }
+    this.turnOff = function(){
+        return this.isRunning = false;
+    }
+}
+
+Vechicle.prototype.honk = function(){
+    if(this.isRunning){
+        return "beep";
+    }
+}
+
+honda = new Vechicle("honda", "civic", "2012");
+
+console.log(honda.isRunning); // false
+console.log(honda.turnOn()); // true
+console.log(honda.honk()); // beep
+console.log(honda.model); // civic
+
+// Colt solution 
+
+function Vechicle(make, model, year){
+    this.make = make;
+    this.model = model;
+    this.year = year;
+    this.isRunning = false;
+}
+
+Vechicle.prototype.turnOn = function(){
+        return this.isRunning = true;
+    }
+
+Vechicle.prototype.turnOff = function(){
+        return this.isRunning = false;
+    }    
+
+Vechicle.prototype.honk = function(){
+    if(this.isRunning){
+        return "beep";
+    }
+}
+
+honda = new Vechicle("honda", "civic", "2012");
+
+
+// Recap
+/*
+Every time the new keyword is used, a link between the object created and the prototype 
+of the constructor is established = this link can be accessed using __proto__
+
+The prototype bejct contains a property called constructor, which points back to the 
+constructor function
+
+To share properties and methods for objects created by a constructor funciton, place 
+them in the prototype as it is the most efficient
+
+*/
+
+
+
